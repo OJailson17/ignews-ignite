@@ -21,7 +21,7 @@ export default async function createCheckoutSession(
       billing_address_collection: "required",
       line_items: [
         {
-          price: "price_1JzskwL8HcR73UzIlqElrGKwD",
+          price: "price_1JzskwL8HcR73UzIlqElrGKw",
           quantity: 1,
         },
       ],
