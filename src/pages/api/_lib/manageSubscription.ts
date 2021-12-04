@@ -9,12 +9,9 @@ export async function saveSubscription(
   const userRef = await fauna.query(
     q.Select(
       "ref",
-      q.Get(q.Match(q.Index("user_by_stripe_customer_id", customerId)))
+      q.Get(q.Match(q.Index("user_by_stripe_customer_id"), customerId))
     )
   );
-
-  console.log(`user ref = ${userRef}`);
-  console.log(subscriptionId);
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
