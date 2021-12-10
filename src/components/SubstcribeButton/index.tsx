@@ -1,4 +1,5 @@
 import { signIn, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import createCheckoutSession from "../../pages/api/subscribe";
 import { api } from "../../services/api";
 import { getStripeJS } from "../../services/stripe-js";
@@ -10,10 +11,16 @@ interface SubscribeButtonProps {
 
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   const [session] = useSession();
+  const { push } = useRouter();
 
   async function handleSubscribe() {
     if (!session) {
       signIn("github");
+      return;
+    }
+
+    if (session.activeSubscription) {
+      push("/posts");
       return;
     }
 
