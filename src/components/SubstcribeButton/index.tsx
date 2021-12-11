@@ -1,8 +1,8 @@
 import { signIn, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
-import createCheckoutSession from "../../pages/api/subscribe";
 import { api } from "../../services/api";
 import { getStripeJS } from "../../services/stripe-js";
+
 import styles from "./styles.module.scss";
 
 interface SubscribeButtonProps {

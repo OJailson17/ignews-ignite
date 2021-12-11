@@ -1,6 +1,6 @@
-import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { GetStaticProps } from "next";
 
 import { SubscribeButton } from "../components/SubstcribeButton";
 import { stripe } from "../services/stripe";
@@ -23,7 +23,9 @@ export default function Home({ product }: HomeProps) {
 
       <main className={styles.contentContainer}>
         <section className={styles.hero}>
-          <span>👏 Hey, welcome</span>
+          <span>
+            <span>👏</span> Hey, welcome
+          </span>
           <h1>
             News about the <span>React</span> world.
           </h1>
