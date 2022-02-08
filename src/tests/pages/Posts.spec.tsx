@@ -18,6 +18,7 @@ describe('Posts page', () => {
     render(<Posts posts={[posts]} />);
 
     expect(screen.getByText('My New Post')).toBeInTheDocument();
+    expect(screen.getByText('Post excerpt')).toBeInTheDocument();
   });
 
   it('Loads initial data', async () => {
