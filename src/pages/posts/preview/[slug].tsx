@@ -1,13 +1,13 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { GetStaticPaths, GetStaticProps } from "next";
-import { RichText } from "prismic-dom";
-import { useSession } from "next-auth/client";
-import { getPrismicClient } from "../../../services/prismic";
+import Head from 'next/head';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { RichText } from 'prismic-dom';
+import { useSession } from 'next-auth/client';
+import { getPrismicClient } from '../../../services/prismic';
 
-import styles from "../post.module.scss";
+import styles from '../post.module.scss';
 
 interface PostPreviewProps {
   post: {
@@ -16,6 +16,24 @@ interface PostPreviewProps {
     content: string;
     updatedAt: string;
   };
+}
+
+interface PostDataResponse {
+  data: {
+    title: [
+      {
+        type: string;
+        text: string;
+      },
+    ];
+    content: [
+      {
+        type: string;
+        text: string;
+      },
+    ];
+  };
+  last_publication_date: string;
 }
 
 export default function Preview({ post }: PostPreviewProps) {
@@ -47,7 +65,7 @@ export default function Preview({ post }: PostPreviewProps) {
 
           <div className={styles.continueReading}>
             Wanna continue reading?
-            <Link href="/">
+            <Link href='/'>
               <a>
                 Subscribe now <span>🤗</span>
               </a>
@@ -62,7 +80,7 @@ export default function Preview({ post }: PostPreviewProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: "blocking",
+    fallback: 'blocking',
   };
 };
 
@@ -71,19 +89,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
 
-  const response = await prismic.getByUID("publication", String(slug), {});
+  const response: PostDataResponse = await prismic.getByUID(
+    'publication',
+    String(slug),
+    {},
+  );
 
   const post = {
     slug,
     title: RichText.asText(response.data.title),
     content: RichText.asHtml(response.data.content.slice(0, 3)),
     updatedAt: new Date(response.last_publication_date).toLocaleDateString(
-      "pt-BR",
+      'pt-BR',
       {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      },
     ),
   };
 
